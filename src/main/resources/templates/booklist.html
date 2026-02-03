@@ -4,52 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Book List</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        th,
-        td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 
 <body>
-    <h1>Book List</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>ISBN</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.title}">Title</td>
-                <td th:text="${book.author}">Author</td>
-                <td th:text="${book.publicationYear}">Year</td>
-                <td th:text="${book.isbn}">ISBN</td>
-                <td th:text="${book.price}">Price</td>
-                <td>
-                    <a th:href="@{'/delete/' + ${book.id}}">Delete</a>
-                    <a th:href="@{'/edit/' + ${book.id}}">Edit</a>
-                </td>
-            </tr>
+    <div class="container mt-4">
+        <h1>Book List</h1>
 
-        </tbody>
-    </table>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                    <th>ISBN</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.title}">Title</td>
+                    <td th:text="${book.author}">Author</td>
+                    <td th:text="${book.publicationYear}">Year</td>
+                    <td th:text="${book.isbn}">ISBN</td>
+                    <td th:text="${book.price}">Price</td>
+                    <td>
+                        <a th:href="@{'/edit/' + ${book.id}}" class="btn btn-primary btn-sm">Edit</a>
+                        <a th:href="@{'/delete/' + ${book.id}}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/addbook}" class="btn btn-success">Add Book</a>
+    </div>
 </body>
 
 </html>
