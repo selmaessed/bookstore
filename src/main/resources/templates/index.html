@@ -2,18 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <meta charset="UTF-8">
     <title>Bookstore</title>
 </head>
 
 <body>
-    <h1>Kirja</h1>
-
-    <p><strong>Title:</strong> <span th:text="${book.title}"></span></p>
-    <p><strong>Author:</strong> <span th:text="${book.author}"></span></p>
-    <p><strong>Year:</strong> <span th:text="${book.publicationYear}"></span></p>
-    <p><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></p>
-    <p><strong>Price:</strong> $<span th:text="${book.price}"></span></p>
-
+    <h1>Books</h1>
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>ISBN</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}">Title</td>
+                <td th:text="${book.author}">Author</td>
+                <td th:text="${book.publicationYear}">Year</td>
+                <td th:text="${book.isbn}">ISBN</td>
+                <td th:text="${book.price}">Price</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>

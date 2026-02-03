@@ -1,14 +1,41 @@
 package com.example.bookstore.bookstore.domain;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String title;
     private String author;
+
+    @Column(name = "publishing_year")
     private int publicationYear;
+
     private String isbn;
     private double price;
 
+    // Tyhjä konstruktori JPA:lle
+    public Book() {
+    }
+
+    // Kätevä konstruktori esimerkkikirjoja varten
+    public Book(String title, String author, int publicationYear, String isbn, double price) {
+        this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.isbn = isbn;
+        this.price = price;
+    }
+
     // Getterit ja setterit
+    public Long getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -49,4 +76,3 @@ public class Book {
         this.price = price;
     }
 }
- 
