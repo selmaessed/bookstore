@@ -13,31 +13,45 @@ public class BookController {
     @Autowired
     private bookrepository repository;
 
-    // Näytä kirjalista
+    // List page
     @GetMapping("/booklist")
-    public String showBookList(Model model) {
+    public String bookList(Model model) {
         model.addAttribute("books", repository.findAll());
         return "booklist";
     }
 
-    // Näytä lomake uuden kirjan lisäämiseksi
+    // Add book page
     @GetMapping("/addbook")
-    public String showAddBookForm(Model model) {
+    public String addBook(Model model) {
         model.addAttribute("book", new Book());
         return "addbook";
     }
 
-    // Käsittele uuden kirjan lisääminen
     @PostMapping("/addbook")
-    public String addBook(@ModelAttribute Book book) {
+    public String saveBook(Book book) {
         repository.save(book);
         return "redirect:/booklist";
     }
 
-    // Poista kirja ID:n perusteella
+    // Delete book
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id) {
         repository.deleteById(id);
+        return "redirect:/booklist";
+    }
+
+    // ✅ Edit book page (GET)
+    @GetMapping("/edit/{id}")
+    public String editBook(@PathVariable("id") Long id, Model model) {
+        Book book = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+        model.addAttribute("book", book);
+        return "editbook";
+    }
+
+    // ✅ Save edited book (POST)
+    @PostMapping("/edit")
+    public String updateBook(Book book) {
+        repository.save(book); // save toimii myös päivitykseen, koska id on mukana
         return "redirect:/booklist";
     }
 }
