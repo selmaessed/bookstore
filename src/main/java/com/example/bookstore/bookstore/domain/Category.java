@@ -1,9 +1,8 @@
 package com.example.bookstore.bookstore.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -13,6 +12,10 @@ public class Category {
     private Long categoryid;
 
     private String name;
+
+    // One-to-many: yksi Category voi olla monella Bookilla
+    @OneToMany(mappedBy = "category")
+    private List<Book> books = new ArrayList<>();
 
     public Category() {
     }
@@ -25,15 +28,27 @@ public class Category {
         return categoryid;
     }
 
-    public void setCategoryid(Long categoryid) {
-        this.categoryid = categoryid;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryid=" + categoryid +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

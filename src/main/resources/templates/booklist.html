@@ -21,6 +21,7 @@
                     <th>Year</th>
                     <th>ISBN</th>
                     <th>Price</th>
+                    <th>Category</th> <!-- Lisätty sarake -->
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -31,6 +32,7 @@
                     <td th:text="${book.publicationYear}">Year</td>
                     <td th:text="${book.isbn}">ISBN</td>
                     <td th:text="${book.price}">Price</td>
+                    <td th:text="${book.category.name}">Category</td> <!-- Lisätty kategoria -->
                     <td>
                         <a th:href="@{'/edit/' + ${book.id}}" class="btn btn-primary btn-sm">Edit</a>
                         <a th:href="@{'/delete/' + ${book.id}}" class="btn btn-danger btn-sm">Delete</a>

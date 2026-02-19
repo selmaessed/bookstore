@@ -18,17 +18,23 @@ public class Book {
     private String isbn;
     private double price;
 
+    // Yhteys Categoryyn (moni-yhteen)
+    @ManyToOne
+    @JoinColumn(name = "categoryid")
+    private Category category;
+
     // Tyhjä konstruktori JPA:lle
     public Book() {
     }
 
-    // Kätevä konstruktori esimerkkikirjoja varten
-    public Book(String title, String author, int publicationYear, String isbn, double price) {
+    // Kätevä konstruktori esimerkkikirjoja varten (Category mukana)
+    public Book(String title, String author, int publicationYear, String isbn, double price, Category category) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
+        this.category = category;
     }
 
     // Getterit ja setterit
@@ -74,5 +80,26 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    // toString ilman listoja tai category-objekteja
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", isbn='" + isbn + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
