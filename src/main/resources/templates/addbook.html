@@ -2,39 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
     <title>Add Book</title>
-    <!-- Bootstrap CSS -->
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Add a New Book</h1>
-        <form th:action="@{/addbook}" th:object="${book}" method="post">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title:</label>
-                <input type="text" th:field="*{title}" class="form-control" id="title" />
-            </div>
-            <div class="mb-3">
-                <label for="author" class="form-label">Author:</label>
-                <input type="text" th:field="*{author}" class="form-control" id="author" />
-            </div>
-            <div class="mb-3">
-                <label for="year" class="form-label">Publication Year:</label>
-                <input type="number" th:field="*{publicationYear}" class="form-control" id="year" />
-            </div>
-            <div class="mb-3">
-                <label for="isbn" class="form-label">ISBN:</label>
-                <input type="text" th:field="*{isbn}" class="form-control" id="isbn" />
-            </div>
-            <div class="mb-3">
-                <label for="price" class="form-label">Price:</label>
-                <input type="number" step="0.01" th:field="*{price}" class="form-control" id="price" />
-            </div>
-            <button type="submit" class="btn btn-success">Add Book</button>
+    <div class="container">
+        <h1>Add New Book</h1>
+
+        <form th:action="@{/books}" th:object="${book}" method="post">
+
+            <label>Title</label>
+            <input type="text" th:field="*{title}" required />
+
+            <label>Author</label>
+            <input type="text" th:field="*{author}" required />
+
+            <label>Publication Year</label>
+            <input type="number" th:field="*{publicationYear}" required />
+
+            <label>Category</label>
+            <select th:field="*{category}" required>
+                <option value="">Select category</option>
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}">
+                </option>
+            </select>
+
+            <button type="submit">Save Book</button>
         </form>
-        <a th:href="@{/booklist}" class="btn btn-secondary mt-3">Back to Book List</a>
+
+
+
+        <div class="text-center back-btn">
+            <a href="/books" class="btn btn-secondary">Back to Books</a>
+        </div>
     </div>
 </body>
 

@@ -4,10 +4,10 @@ import com.example.bookstore.bookstore.domain.Category;
 import com.example.bookstore.bookstore.repository.CategoryRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/categories")
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;
@@ -16,21 +16,21 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/categorylist")
-    public String categoryList(Model model) {
+    @GetMapping
+    public String listCategories(Model model) {
         model.addAttribute("categories", categoryRepository.findAll());
-        return "categorylist";
+        return "categorylist"; // templates/categorylist.html
     }
 
-    @GetMapping("/addcategory")
-    public String addCategoryForm(Model model) {
+    @GetMapping("/new")
+    public String showAddCategoryForm(Model model) {
         model.addAttribute("category", new Category());
-        return "addcategory";
+        return "addcategory"; // templates/addcategory.html
     }
 
-    @PostMapping("/savecategory")
-    public String saveCategory(Category category) {
+    @PostMapping
+    public String saveCategory(@ModelAttribute Category category) {
         categoryRepository.save(category);
-        return "redirect:/categorylist";
+        return "redirect:/categories";
     }
 }

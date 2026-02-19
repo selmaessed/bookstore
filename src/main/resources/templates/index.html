@@ -2,32 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
     <title>Bookstore</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <h1>Books</h1>
-    <table border="1" cellpadding="5">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>ISBN</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.title}">Title</td>
-                <td th:text="${book.author}">Author</td>
-                <td th:text="${book.publicationYear}">Year</td>
-                <td th:text="${book.isbn}">ISBN</td>
-                <td th:text="${book.price}">Price</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <h1>Bookstore Management</h1>
+
+        <div class="text-center">
+            <a href="/books" class="btn btn-primary">View All Books</a>
+            <a href="/books/new" class="btn btn-success">Add New Book</a>
+            <a href="/categories" class="btn btn-primary">View All Categories</a>
+            <a href="/categories/new" class="btn btn-success">Add New Category</a>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -2,46 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Book List</title>
-
-    <!-- Bootstrap CSS -->
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <title>All Books</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h1>Book List</h1>
+    <div class="container">
+        <h1>All Books</h1>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Year</th>
-                    <th>ISBN</th>
-                    <th>Price</th>
-                    <th>Category</th> <!-- Lisätty sarake -->
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="book : ${books}">
-                    <td th:text="${book.title}">Title</td>
-                    <td th:text="${book.author}">Author</td>
-                    <td th:text="${book.publicationYear}">Year</td>
-                    <td th:text="${book.isbn}">ISBN</td>
-                    <td th:text="${book.price}">Price</td>
-                    <td th:text="${book.category.name}">Category</td> <!-- Lisätty kategoria -->
-                    <td>
-                        <a th:href="@{'/edit/' + ${book.id}}" class="btn btn-primary btn-sm">Edit</a>
-                        <a th:href="@{'/delete/' + ${book.id}}" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Category</th>
+            </tr>
+
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.publicationYear}"></td>
+                <td th:text="${book.category.name}"></td>
+            </tr>
         </table>
 
-        <a th:href="@{/addbook}" class="btn btn-success">Add Book</a>
+        <div class="text-center back-btn">
+            <a href="/books/new" class="btn btn-success">Add New Book</a>
+            <a href="/" class="btn btn-secondary">Back to Home</a>
+        </div>
     </div>
 </body>
 

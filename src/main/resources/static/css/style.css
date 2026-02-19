@@ -1,0 +1,152 @@
+/* style.css - clean & professional */
+
+/* Body & container */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Headers */
+h1,
+h2 {
+    color: #212529;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Buttons for links */
+a.btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 5px 5px 5px 0;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+a.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Button types */
+a.btn-primary {
+    background-color: #007bff;
+}
+
+a.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+a.btn-secondary {
+    background-color: #6c757d;
+}
+
+a.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+a.btn-success {
+    background-color: #28a745;
+}
+
+a.btn-success:hover {
+    background-color: #218838;
+}
+
+a.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+a.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+a.btn-danger {
+    background-color: #dc3545;
+}
+
+a.btn-danger:hover {
+    background-color: #bd2130;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+}
+
+table th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Form styling */
+form {
+    margin-top: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: auto;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Footer links or small buttons */
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+/* Center align for forms and tables */
+.text-center {
+    text-align: center;
+}
