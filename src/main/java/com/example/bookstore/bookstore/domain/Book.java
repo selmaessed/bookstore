@@ -1,5 +1,6 @@
 package com.example.bookstore.bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,10 +16,11 @@ public class Book {
 
     private String title;
     private String author;
-    private int publicationYear; // korjasimme year -> publicationYear
+    private int publicationYear;
 
     @ManyToOne
-    private Category category; // tämä yhdistää kirjan kategoriaan
+    @JsonIgnoreProperties("books") // estää JSON-silmukan, jos Categoryssa olisi lista kirjoista
+    private Category category;
 
     public Book() {
     }
@@ -30,44 +32,19 @@ public class Book {
         this.category = category;
     }
 
-    // Getterit ja setterit
-    public Long getId() {
-        return id;
-    }
+    // getterit ja setterit
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getAuthor() { return author; }
+    public void setAuthor(String author) { this.author = author; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public int getPublicationYear() { return publicationYear; }
+    public void setPublicationYear(int publicationYear) { this.publicationYear = publicationYear; }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public int getPublicationYear() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+    public Category getCategory() { return category; }
+    public void setCategory(Category category) { this.category = category; }
 }
