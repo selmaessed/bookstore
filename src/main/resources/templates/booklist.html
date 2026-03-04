@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>All Books</title>
@@ -10,25 +10,34 @@
     <div class="container">
         <h1>All Books</h1>
 
+        <p>Logged in as: <strong sec:authentication="name"></strong></p>
+
         <table>
             <tr>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Year</th>
                 <th>Category</th>
+                <th>Actions</th>
             </tr>
-
             <tr th:each="book : ${books}">
                 <td th:text="${book.title}"></td>
                 <td th:text="${book.author}"></td>
                 <td th:text="${book.publicationYear}"></td>
                 <td th:text="${book.category.name}"></td>
+                <td>
+                    <a class="btn btn-primary" th:href="@{'/books/edit/' + ${book.id}}">Edit</a>
+                    <span sec:authorize="hasRole('ADMIN')">
+                        <a class="btn btn-danger" th:href="@{'/books/delete/' + ${book.id}}">Delete</a>
+                    </span>
+                </td>
             </tr>
         </table>
 
         <div class="text-center back-btn">
-            <a href="/books/new" class="btn btn-success">Add New Book</a>
-            <a href="/" class="btn btn-secondary">Back to Home</a>
+            <a class="btn btn-success" href="/books/new">Add New Book</a>
+            <a class="btn btn-secondary" href="/">Back to Home</a>
+            <a class="btn btn-danger" href="/logout">Logout</a>
         </div>
     </div>
 </body>

@@ -10,15 +10,22 @@
     <div class="container">
         <h1>Edit Book</h1>
 
-        <form th:action="@{/books}" th:object="${book}" method="post">
+        <form th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
 
             <input type="hidden" th:field="*{id}">
 
+            <label>Title:</label>
             <input type="text" th:field="*{title}" required>
+
+            <label>Author:</label>
             <input type="text" th:field="*{author}" required>
-            <input type="number" th:field="*{publicationYear}" <select th:field="*{category}">
-            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat.name}">
-            </option>
+
+            <label>Year:</label>
+            <input type="number" th:field="*{publicationYear}" required>
+
+            <label>Category:</label>
+            <select th:field="*{category.id}" required>
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
             </select>
 
             <input type="submit" value="Update Book">
