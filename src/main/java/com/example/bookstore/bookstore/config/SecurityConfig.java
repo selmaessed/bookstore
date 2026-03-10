@@ -1,54 +1,55 @@
 package com.example.bookstore.bookstore.config;
 
+import com.example.bookstore.bookstore.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableMethodSecurity // Mahdollistaa @PreAuthorize ja sec:authorize käytön
 public class SecurityConfig {
 
-        @Bean
-        public InMemoryUserDetailsManager userDetailsService() {
-                UserDetails user = User.withUsername("user")
-                                .password("password")
-                                .roles("USER")
-                                .build();
+    private final UserDetailsServiceImpl userDetailsService;
 
-                UserDetails admin = User.withUsername("admin")
-                                .password("admin123")
-                                .roles("ADMIN")
-                                .build();
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
-                return new InMemoryUserDetailsManager(user, admin);
-        }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        @Bean
-        public PasswordEncoder passwordEncoder() {
-                return NoOpPasswordEncoder.getInstance();
-        }
+    @Bean
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
-                                .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/books/login", "/h2-console/**").permitAll()
-                                                .anyRequest().authenticated())
-                                .formLogin(form -> form
-                                                .loginPage("/books/login")
-                                                .defaultSuccessUrl("/books", true)
-                                                .permitAll())
-                                .logout(logout -> logout.permitAll())
-                                .csrf(csrf -> csrf.disable())
-                                .headers(headers -> headers.frameOptions().disable());
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests()
+                .requestMatchers("/books/delete/**").hasAuthority("ADMIN") // vain admin voi poistaa
+                .requestMatchers("/books/**").authenticated() // kaikki muut kirjautumisen vaativat
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/books/login") // oma login-sivu
+                .defaultSuccessUrl("/books", true) // onnistuneen kirjautumisen jälkeen kirjalista
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout") // POST-pyyntö logoutille
+                .logoutSuccessUrl("/books/login?logout") // ohjaa login-sivulle uloskirjautumisen jälkeen
+                .permitAll()
+                .and()
+                .csrf(); // CSRF pitää päällä, logout vaatii POST-pyynnön
 
-                return http.build();
-        }
+        return http.build();
+    }
 }

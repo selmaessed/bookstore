@@ -3,5 +3,5 @@ package com.example.bookstore.bookstore.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.bookstore.bookstore.domain.Book;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepositoryTemp extends JpaRepository<Book, Long> {
 }

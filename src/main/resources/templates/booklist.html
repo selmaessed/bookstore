@@ -27,7 +27,7 @@
                 <td th:text="${book.category.name}"></td>
                 <td>
                     <a class="btn btn-primary" th:href="@{'/books/edit/' + ${book.id}}">Edit</a>
-                    <span sec:authorize="hasRole('ADMIN')">
+                    <span sec:authorize="hasAuthority('ADMIN')">
                         <a class="btn btn-danger" th:href="@{'/books/delete/' + ${book.id}}">Delete</a>
                     </span>
                 </td>
@@ -37,7 +37,11 @@
         <div class="text-center back-btn">
             <a class="btn btn-success" href="/books/new">Add New Book</a>
             <a class="btn btn-secondary" href="/">Back to Home</a>
-            <a class="btn btn-danger" href="/logout">Logout</a>
+
+            <!-- Logout POST-formi -->
+            <form th:action="@{/logout}" method="post" style="display:inline">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
         </div>
     </div>
 </body>
