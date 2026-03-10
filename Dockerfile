@@ -1,33 +1,21 @@
-# Build-vaihe
-FROM eclipse-temurin:17-jdk-focal AS builder
+FROM maven:3.9-eclipse-temurin-17 AS build
 
-WORKDIR /opt/app
+WORKDIR /app
 
-# Kopioi Mavenin asetukset ja projektin metadata
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN chmod +x ./mvnw
+# Kopioi koko projekti
+COPY . .
 
-# Lataa riippuvuudet
-RUN ./mvnw dependency:go-offline
+# Buildaa Spring Boot jar
+RUN mvn clean package -DskipTests
 
-# Kopioi lähdekoodi
-COPY ./src ./src
+# Runtime image
+FROM eclipse-temurin:17-jre
 
-# Buildaa projekti
-RUN ./mvnw clean install -DskipTests
+WORKDIR /app
 
-# Kopioi JAR-tiedosto suoraan (ei käytetä find-komentoa)
-RUN cp target/*.jar /opt/app/app.jar
-
-# Runtime-vaihe
-FROM eclipse-temurin:17-jre-alpine
-
-WORKDIR /opt/app
-
-# Kopioi buildattu JAR-tiedosto
-COPY --from=builder /opt/app/app.jar /opt/app/app.jar
+# Kopioi buildattu jar
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/opt/app/app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
