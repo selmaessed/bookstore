@@ -1,7 +1,7 @@
 package com.example.bookstore.bookstore.web;
 
 import com.example.bookstore.bookstore.domain.Book;
-import com.example.bookstore.bookstore.repository.BookRepositoryTemp;
+import com.example.bookstore.bookstore.repository.BookRepository;
 import com.example.bookstore.bookstore.repository.CategoryRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookRepositoryTemp bookRepository;
+    private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
 
-    public BookController(BookRepositoryTemp bookRepository, CategoryRepository categoryRepository) {
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
     }

@@ -1,7 +1,7 @@
 package com.example.bookstore.bookstore.web;
 
 import com.example.bookstore.bookstore.domain.Book;
-import com.example.bookstore.bookstore.repository.BookRepositoryTemp;
+import com.example.bookstore.bookstore.repository.BookRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookRestController {
 
-    private final BookRepositoryTemp bookRepository;
+    private final BookRepository bookRepository;
 
-    public BookRestController(BookRepositoryTemp bookRepository) {
+    public BookRestController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
